@@ -89,3 +89,27 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_shutdown(void)
+{
+ outw(0xB004, 0x0|0x2000);
+ outw(0x604, 0x0|0x2000);
+return 0;
+}
+
+int sys_shutdown2(void)
+{
+	char *path;
+	if(argstr(0,&path)>0){	
+	cprintf("%s",path);
+	outw(0xB004,0x0|0x2000);
+	outw(0x604, 0x0|0x2000);
+	return 0;
+	}
+	else {
+	cprintf("give a command line argument, thanks");
+	return 1;
+	}
+	return 1;
+}	
